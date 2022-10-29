@@ -10,5 +10,4 @@ fruits.shift();         //remove from start of array
 
 let num1 = (arg) => (arg == 7);
 let num = numbers.find(num1)////return value not index
-console.log(num)
-
+console.log(num)  
