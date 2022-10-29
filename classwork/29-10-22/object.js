@@ -22,4 +22,4 @@ const employer = {
     employer_salary: "50k",
 }
 
-console.log(employer.company_address.city,employer.employer_address.city);
+console.log(employer.company_address.city,employer.employer_address.city);//output object

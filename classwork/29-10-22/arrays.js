@@ -10,4 +10,4 @@ console.log(fruits)
 
 let num1 = (arg) => (arg == 7);
 let num = numbers.find(num1)////return value not index
-console.log(num);
+console.log(num);//output number
