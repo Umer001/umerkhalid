@@ -34,6 +34,30 @@ objarray.forEach(obj => {
 
 
 const numarr = [2,3,6,9,15,30,33,40,51];
- 
+ console.log(numarr.filter(val=>(val%2==0))); //return num arr mod of 2
 
-console.log(numarr.filter(val=>(val%2==0)));
+
+for(let i=1;i<=50;i++){
+    flag=false;
+
+    if(i%3==0 && (i%5==0)){
+        console.log(i+" Fuzz Buzz")
+        
+    }
+   else if(i%3==0){
+        console.log(i+" Fuzz")
+        
+    }
+    else if(i%5==0){
+        console.log(i+" Buzz")
+        
+    }
+    else if(i%7==0){
+        console.log(i+" Dazz")
+        
+    }
+    else {
+        console.log(i+" num")
+
+    }
+}
