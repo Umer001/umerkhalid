@@ -5,7 +5,7 @@ fruits.push("banana");
 
 fruits.unshift("Gava");//store at start of array
 fruits.shift();         //remove from start of array
-//console.log(fruits)
+console.log(fruits)
 
 
 let num1 = (arg) => (arg == 7);

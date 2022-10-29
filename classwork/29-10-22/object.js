@@ -9,7 +9,7 @@ const obj = {
 
 
 //console.log(obj.address.city);
-//console.log(obj["address"]["country"]);//Use when there is some variable instead of key
+console.log(obj["address"]["country"]);//Use when there is some variable instead of key
 
 const employer = {
     employee_id: "24",
