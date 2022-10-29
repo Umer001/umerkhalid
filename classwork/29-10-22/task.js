@@ -41,23 +41,31 @@ for(let i=1;i<=50;i++){
     flag=false;
 
     if(i%3==0 && (i%5==0)){
-        console.log(i+" Fuzz Buzz")
+        console.log("Fuzz Buzz")
         
     }
-   else if(i%3==0){
-        console.log(i+" Fuzz")
+    else if(i%3==0 && (i%7==0)){
+        console.log("Fuzz Dazz")
+        
+    }
+    else if(i%5==0 && (i%7==0)){
+        console.log("Buzz Dazz")
+        
+    }
+    else if(i%3==0){
+        console.log("Fuzz")
         
     }
     else if(i%5==0){
-        console.log(i+" Buzz")
+        console.log("Buzz")
         
     }
     else if(i%7==0){
-        console.log(i+" Dazz")
+        console.log("Dazz")
         
     }
     else {
-        console.log(i+" num")
+        console.log(i)
 
     }
 }
