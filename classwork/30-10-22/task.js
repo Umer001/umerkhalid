@@ -9,5 +9,12 @@ const covert = (temp, scale) => {
   else return `${((temp - 32) * 5) / 9} C`;
 };
 
-console.log(covert(99, "F")); //give celcius value and get F value
-console.log(covert(210, "C")); //give faraehite value and  get celcisu value
+//console.log(covert(99, "F")); //give celcius value and get F value
+//console.log(covert(210, "C")); //give faraehite value and  get celcisu value
+
+const obj = {
+  name: "Umer",
+  uni: "QAU",
+  cgpa: (marks) => `${((marks / 1100) * 100).toFixed(2)} %`,
+};
+console.log(obj.cgpa(826));
