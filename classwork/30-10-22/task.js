@@ -32,6 +32,8 @@ function myFunc(num, str) {
   return arr;
 }
 
+const abc = (str) => {};
+
 const xyz = (num, str) => {
   return Array(num).fill(str);
 };
@@ -56,3 +58,14 @@ arr2 = arr1;
 
 arr2[0] = 4;
 console.log(removeExtra(arr1));
+
+const employer2 = {
+  employee_id: "24",
+  employee_name: "Talha,",
+  employee_company: "Jazz",
+  company_address: { city: "Islamabad", country: "PAK" },
+  getAddress() {
+    return `My address is ${this.company_address.city} and my country is ${this.company_address.country}`;
+  },
+};
+console.log(employer2.getAddress());
