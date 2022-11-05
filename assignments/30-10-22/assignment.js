@@ -14,4 +14,17 @@ const sub = (num) => `-${num}`;
 const times = (num) => `*${num}`;
 const divide = (num) => `/${num}`;
 
-console.log("Result: " + nine(times(nine())));
+console.log("Result: " + two(times(nine())));
+
+const nine2 = (param) => {
+  return param ? param(9) : 9;
+};
+const five2 = (param) => {
+  return param ? param(5) : 5;
+};
+
+const add2 = (num) => {
+  return (param1) => param1 + num;
+};
+
+console.log(nine2(add2(nine2())));
