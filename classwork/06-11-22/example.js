@@ -15,17 +15,15 @@ const asyncFuntion = async () => {
 const first = async () => {
   await asyncFuntion();
   console.log("first completed");
-  debugger;
 };
 
 const second = () => {
   console.log("second completed");
-  debugger;
 };
 
-async function main() {
-  await first();
-  await second();
+function main() {
+  first();
+  second();
 }
 
 main();

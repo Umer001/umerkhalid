@@ -3,7 +3,7 @@ function myFunction(str) {
 }
 
 const myArrowFunction = (str) => {
-  return str + " my arrow function";
+  str + " my arrow function"; ///we user arrow functions because they aquire less memory
 };
 
 const myArrowFunction2 = (str) => str + " my arrow function";

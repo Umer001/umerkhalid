@@ -25,7 +25,12 @@ const employer2 = {
   employee_company: "Jazz",
   company_address: { city: "Islamabad", country: "PAK" },
   greet() {
-    return this.company_address.city;
+    return this.company_address.city; //this will pass the current object refrence
   },
 };
 console.log(employer2.greet());
+
+/////object destrtution/////////////////   bar bar object and dot sy bachnay k lia
+
+const { urdu, maths } = marks;
+console.log(urdu);

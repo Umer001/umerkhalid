@@ -13,8 +13,8 @@ fruits.push("apple");
 fruits.push("banana");
 
 fruits.unshift("Gava"); //store at start of array
-fruits.shift(); //remove from start of array
-//console.log(fruits)
+//fruits.shift(); //remove from start of array
+console.log(fruits);
 
 let findit = 7;
 let findnum = (arg) => arg == findit;

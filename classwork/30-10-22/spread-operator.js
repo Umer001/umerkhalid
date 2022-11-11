@@ -14,3 +14,5 @@ let newobj = { ...obj, key: "value" };
 newobj.key = "Test";
 console.log(newobj);
 console.log(arr.fill("fruit", 1, 2));
+
+///

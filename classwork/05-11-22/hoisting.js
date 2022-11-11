@@ -4,7 +4,7 @@ var b = 10; ////// var me pehly memory allocate hoti ha
 ////only funcaitons and var variables are hoisted..sirf ye pehly sy memory me allocate hoty hai
 //const aur let nai hoty..
 
-//console.log(tenintotwo(8));
+console.log(tenintotwo(8));
 
 function tenintotwo(num1) {
   return 2 * 2;

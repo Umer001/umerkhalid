@@ -1,6 +1,6 @@
 async function getApi() {
   const data = await fetch("https://fakestoreapi.com/products");
-  const res = await res.json();
+  const res = await data.json();
 
-  console.log(res);
+  console.log(data);
 }
