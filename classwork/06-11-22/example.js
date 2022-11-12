@@ -26,4 +26,35 @@ function main() {
   second();
 }
 
-main();
+//main();
+
+//console.log("This is the first line");
+function parent() {
+  console.log("This is inside parent");
+  function child() {
+    console.log("This is inside child");
+  }
+  child();
+}
+//parent();
+//console.log("This is the last line");
+
+class test {
+  constructor(name) {
+    this.name = name;
+  }
+  normal(params) {
+    setTimeout(function test() {
+      console.log(this.name);
+    }, 200);
+  }
+  arrow(params) {
+    setTimeout(() => {
+      console.log(this.name);
+    }, 200);
+  }
+}
+t = new test("Umer");
+
+t.normal();
+t.arrow();
