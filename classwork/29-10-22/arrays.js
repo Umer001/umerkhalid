@@ -23,3 +23,11 @@ let filternum = numbers.filter(findnum);
 console.log(numbers.find(findnum)); //return value
 console.log(numbers.filter(findnum)); //return array
 console.log(objarray.find((obj) => obj.name == "umer"));
+
+const arr = [1, 4, 6];
+let totalsum = arr.reduce((acc, cur) => {
+  ///acc me values store ho ge, cur me value aye ge
+  return (acc += cur);
+}, 0); ///0 sy intialize karwa rhy
+
+console.log("🚀 ~ file: arrays.js ~ line 34 ~ totalsum", totalsum);

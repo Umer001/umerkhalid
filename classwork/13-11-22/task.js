@@ -36,3 +36,8 @@ users.forEach((elem) => {
   }
 });
 console.log(AgeLess38);
+
+let arr2 = users.map((elem) => {
+  return this.age < 50 ? this.firstName : "";
+});
+console.log(AgeLess38);

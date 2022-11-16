@@ -1,6 +1,7 @@
 async function getApi() {
-  const data = await fetch("https://fakestoreapi.com/products");
+  const data = await fetch("HTTPS://JSONPLACEHOLDER.TYPICODE.COM/USERS");
   const res = await data.json();
 
-  console.log(data);
+  console.log(res);
 }
+getApi();
