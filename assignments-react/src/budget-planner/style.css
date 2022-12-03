@@ -1,0 +1,114 @@
+body{
+    margin: 2rem;
+}
+.card{
+    color:#333;
+    padding: 20px 10px;
+    width: 25%;
+    border-radius: 4px;
+}
+.card-grey{
+    background-color:#e1e3e4;
+}
+.card-green{
+    background-color:#d5eddb;
+}
+.card-blue{
+    background-color:#cbe5ff;
+}
+.flex-box{
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+}
+.expense{
+    border: 1px solid black;
+}
+.amount {
+    background-color: #0b68a7;
+    padding: 2px 5px;
+    color: white;
+    border-radius: 360px;
+    font-size: 14px;
+}
+.close-btn {
+    background-color: #111111;
+    padding: 2px 5px;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    top: -2px;
+    position: relative;
+    cursor: pointer;
+}
+table, td, th {
+    border: 1px solid;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  td.expense-title{
+    width: 90%;
+  }
+ td.expense-amount{
+    width: 10%;
+  }  
+  td {
+    border: 0px;
+    padding: 10px 5px;
+}
+  tr {
+    border: 1px solid #a8a8a8;
+}
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: end;
+  }
+  
+  /* Add some margins for each label */
+  .form-inline label {
+    margin: 5px 10px 5px 0;
+  }
+  
+  /* Style the input fields */
+  .form-inline input {
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  
+  /* Style the submit button */
+  .form-inline button {
+    padding: 10px 20px;
+    background-color: dodgerblue;
+    border: 1px solid #ddd;
+    color: white;margin: 5px 10px 5px 0;
+  }
+  
+  .form-inline button:hover {
+    background-color: #1b6ebe;
+    cursor: pointer;
+}
+  /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+  @media (max-width: 800px) {
+    td.expense-title{
+        width: 70%;
+      }
+     td.expense-amount{
+        width: 30%;
+      }  
+    .form-inline input {
+      margin: 10px 0;
+    }
+  
+    .form-inline {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+  
