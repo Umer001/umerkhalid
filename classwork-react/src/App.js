@@ -1,9 +1,9 @@
-import "./App.css";
-import OnChange from "./27-11-22/onChange";
+import "bootstrap/dist/css/bootstrap.min.css";
+import UserInfo from "./3-12-22/task";
 function App() {
   return (
     <div className="App">
-      <OnChange />
+      <UserInfo />
     </div>
   );
 }
