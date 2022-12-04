@@ -1,0 +1,14 @@
+.close-btn {
+    background-color: #f44336;
+    border-color: #f44336;
+    padding: 0px 5px;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    margin-top: 2px;
+    position: relative;
+    cursor: pointer;
+    
+}dl, ol, ul {
+    list-style: none; padding-left: 6px;
+  }
