@@ -19,6 +19,31 @@ const Navbar = () => {
       title: "Profile",
       path: "/profile",
     },
+    {
+      id: 4,
+      title: "Cars",
+      path: "/cars",
+    },
+    {
+      id: 5,
+      title: "React Query Products",
+      path: "/products-react-query",
+    },
+    {
+      id: 6,
+      title: "Colors",
+      path: "/colors",
+    },
+    {
+      id: 7,
+      title: "Apprerance",
+      path: "/dark-light",
+    },
+    {
+      id: 8,
+      title: "Dogs",
+      path: "/dogs",
+    },
   ];
   return (
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
