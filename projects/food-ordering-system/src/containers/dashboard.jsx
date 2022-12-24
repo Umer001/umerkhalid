@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../services/firebase-config";
 
-const Home = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const handleSignOut = async () => {
     await signOut(auth);
@@ -16,9 +16,9 @@ const Home = () => {
         <button className="btn btn-success" onClick={() => handleSignOut()}>
           Sign out
         </button>
-      </div>{" "}
+      </div>
     </section>
   );
 };
 
-export default Home;
+export default Dashboard;
