@@ -12,6 +12,11 @@ const Slider = () => {
           src="https://www.cheezious.com/_next/image?url=https%3A%2F%2Fem-cdn.eatmubarak.pk%2F54946%2Fweb_splash%2F1653935620.png&w=1920&q=90"
           alt="..."
         />
+        <img
+          src="https://www.cheezious.com/_next/image?url=https%3A%2F%2Fem-cdn.eatmubarak.pk%2F54946%2Fweb_splash%2F1675172747.jpg&w=1920&q=90
+        "
+          alt="..."
+        />
       </Carousel>
     </div>
   );

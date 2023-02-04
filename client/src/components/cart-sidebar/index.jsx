@@ -1,24 +1,45 @@
 import React, { useState, useEffect } from "react";
 import MiniitemCard from "./mini-item-card";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { slice } from "../../../src/store/slices/auth";
+import { slice as redirectSlice } from "../../../src/store/slices/redirect";
+import { verifyToken } from "../../utils/verify-token";
+import { EmptyCart } from "../../components";
 import {
   getTotals,
   addToCart,
   decreaseCart,
   removeFromCart,
 } from "../../store/slices/cart";
+
 const CartSidebar = ({ open, changeHandler }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { items, totalAmount } = useSelector((state) => {
     return state.cart;
+  });
+  const { showAuthPop, currentUser } = useSelector((state) => {
+    return state.auth;
   });
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     setIsOpen(open);
     dispatch(getTotals());
+    open
+      ? document.body.classList.add("overflow-hidden", "pr-[15px]")
+      : document.body.classList.remove("overflow-hidden", "pr-[15px]");
   }, [open, dispatch, items]);
-
+  const handleCheckout = () => {
+    if (!currentUser || !verifyToken()) {
+      dispatch(redirectSlice.actions.setRedirect("/checkout"));
+      changeHandler(setIsOpen(false));
+      dispatch(slice.actions.setShowAuthPop(!showAuthPop));
+    } else {
+      changeHandler(setIsOpen(false));
+      navigate("/checkout");
+    }
+  };
   return (
     <>
       {isOpen ? (
@@ -128,8 +149,8 @@ const CartSidebar = ({ open, changeHandler }) => {
               </div>
 
               <div className=" mt-5">
-                <Link
-                  onClick={() => changeHandler(setIsOpen(false))}
+                <button
+                  onClick={handleCheckout}
                   to="/checkout"
                   className=" flex items-center w-full justify-center px-4 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 >
@@ -147,29 +168,12 @@ const CartSidebar = ({ open, changeHandler }) => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </Link>
+                </button>
               </div>
             </div>
           </div>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center h-[70vh]">
-            <div className="my-[6px]">
-              <span className="inline-block overflow-hidden w-[60px] h-[60px] bg-transparent opacity-1 border-0 m-0 p-0 relative">
-                <img
-                  alt="Cart Empty"
-                  src="https://www.cheezious.com/images/cart-empty.svg"
-                  decoding="async"
-                  data-nimg="fixed"
-                  srcSet="https://www.cheezious.com/images/cart-empty.svg 1x, https://www.cheezious.com/images/cart-empty.svg 2x"
-                  className="absolute inset-0 bg-cover bg-center p-0 border-0 m-auto block w-0 h-0 min-w-full min-h-full max-w-full max-h-full object-contain"
-                />
-              </span>
-            </div>
-            <span className=" text-gray-700">Your cart is empty</span>
-            <span className="my-[6px] text-sm text-gray-700">
-              Add an item and start making your order
-            </span>
-          </div>
+          <EmptyCart />
         )}
       </div>
     </>

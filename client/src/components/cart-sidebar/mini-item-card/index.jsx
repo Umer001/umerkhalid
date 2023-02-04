@@ -15,8 +15,8 @@ const MiniitemCard = ({
       <div className="relative max-h-[60px] max-w-[60px] h-[35vw] w-[35vw] rounded  overflow-hidden mx-2">
         <span>
           <img
-            title="Arabic Rolls"
-            alt="Arabic Rolls"
+            title={item.name}
+            alt={item.name}
             sizes="100vw"
             src={item.api_featured_image}
             decoding="async"

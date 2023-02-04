@@ -1,15 +1,24 @@
 import { Modal } from "flowbite-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Popup = ({ children, isClose, isOpen }) => {
-  return (
-    <React.Fragment>
-      <Modal show={isOpen} size="md" popup={true} onClose={isClose}>
-        <Modal.Header />
+  useEffect(() => {
+    isOpen
+      ? document.body.classList.add("overflow-hidden", "pr-[15px]")
+      : document.body.classList.remove("overflow-hidden", "pr-[15px]");
+  }, [isOpen]);
 
-        <Modal.Body>{children}</Modal.Body>
-      </Modal>
-    </React.Fragment>
+  return (
+    <>
+      <React.Fragment>
+        <Modal show={isOpen} size="md" popup={true} onClose={isClose}>
+          <Modal.Header />
+
+          <Modal.Body>{children}</Modal.Body>
+        </Modal>
+      </React.Fragment>
+      <div id="recaptcha-container"></div>
+    </>
   );
 };
 

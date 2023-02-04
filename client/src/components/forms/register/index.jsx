@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+import { Label, TextInput, Checkbox, Button, Spinner } from "flowbite-react";
 import { slice } from "../../../store/slices/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { sendOtp } from "../../../services/http-services/auth";
@@ -117,20 +117,26 @@ const RegisterForm = () => {
 
               <div className="w-full">
                 <Button color="failure" type="submit" disabled={isSubmitting}>
-                  Create account
+                  Create account{" "}
+                  {isSubmitting ? (
+                    <div className="ml-2">
+                      <Spinner size="sm" light={true} color="failure" />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Button>
               </div>
               <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                Not registered?{" "}
+                Already have account?{" "}
                 <a
                   onClick={() =>
                     dispatch(slice.actions.setShowRegister(!showRegisterForm))
                   }
                   className="text-red-700 hover:underline dark:text-blue-500 cursor-pointer"
                 >
-                  Create account
+                  Login
                 </a>
-                <div id="recaptcha-container"></div>
               </div>
             </form>
           )}

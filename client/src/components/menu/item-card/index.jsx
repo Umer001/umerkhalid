@@ -1,9 +1,17 @@
-import { Badge } from "flowbite-react";
-import React from "react";
+import { Badge, Button, Spinner } from "flowbite-react";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { slice } from "../../../store/slices/cart";
 
 const ItemCard = ({ item }) => {
+  const [add, setAdd] = useState(false);
+  const handleAddToCart = () => {
+    setAdd(true);
+    dispatch(slice.actions.addToCart(item));
+    toast.success("Item added to cart");
+    setAdd(false);
+  };
   const dispatch = useDispatch();
   return (
     <div
@@ -11,7 +19,7 @@ const ItemCard = ({ item }) => {
       data-testid="flowbite-card"
     >
       <img
-        alt="Apple Watch Series 7 in colors pink, silver, and black"
+        alt={item.name}
         className="h-auto w-40 rounded-t-lg object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
         src={item.api_featured_image}
       />
@@ -30,12 +38,12 @@ const ItemCard = ({ item }) => {
         <span className="text-xl font-bold text-gray-900 dark:text-white"></span>
         <div className="flex items-center justify-between">
           <button
-            onClick={() => dispatch(slice.actions.addToCart(item))}
+            onClick={handleAddToCart}
             className="text-white bg-red-700 border border-transparent hover:bg-red-800 focus:ring-4 focus:ring-red-300 disabled:hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600 focus:!ring-2 group flex h-min items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded"
             type="button"
           >
             <span className="flex items-center  text-md px-2 py-0">
-              Add to cart
+              {!add ? "Add to cart" : "Adding..."}
             </span>
           </button>
         </div>

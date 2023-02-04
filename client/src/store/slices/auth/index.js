@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  showRegisterForm: true,
+  showRegisterForm: false,
   customerInfo: {},
   currentUser: {},
   showAuthPop: false,

@@ -46,8 +46,7 @@ export const verifyOtp = async ({ values, cbSuccess, cbFailure }) => {
   try {
     let result = await window.confirmationResult.confirm(otp);
     const user = await result.user;
-    console.log("🚀 ~ file: index.js:48 ~ verifyOtp ~ user", user.uid);
-    cbSuccess({ status: 201, message: "Otp verify successfully" + user.uid });
+    cbSuccess({ status: 201, message: "Otp verify successfully" });
   } catch (error) {
     cbFailure({ status: 400, message: error.message });
   }
@@ -76,6 +75,24 @@ export const signUpCustomer = async ({
     cbFailure({ status: 400, message: error.message });
   }
 };
+export const signInCustomer = async ({ phone, cbSuccess, cbFailure }) => {
+  try {
+    const { data, status } = await axios.post(
+      "http://localhost:4000/auth/login",
+      { phone }
+    );
+    localStorage.setItem("app-token", data.token);
+    status == 201
+      ? cbSuccess({
+          status: 201,
+          message: "login successfully",
+          data: data.token,
+        })
+      : cbFailure({ status: 400, data: data.error });
+  } catch (error) {
+    cbFailure({ status: 400, message: error.message });
+  }
+};
 export const getUserInfo = async () => {
   try {
     // Make a GET request to the protected route on the server
@@ -91,5 +108,19 @@ export const getUserInfo = async () => {
   } catch (error) {
     // Return an error if the request fails
     return error;
+  }
+};
+
+export const userExist = async (values) => {
+  console.log("🚀 ~ file: index.js:98 ~   ~ values", values);
+  try {
+    const { data } = await axios.post(`http://localhost:4000/auth/user-exist`, {
+      ...values,
+    });
+
+    return data.flag;
+  } catch (error) {
+    console.log("🚀 ~ file: index.js:105 ~ userExist ~ error", error);
+    return false;
   }
 };

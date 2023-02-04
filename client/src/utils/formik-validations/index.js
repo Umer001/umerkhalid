@@ -1,5 +1,9 @@
 import * as Yup from "yup";
 
+export const checkoutValidationSchema = Yup.object({
+  address: Yup.string().trim().min(5).max(50).required("Enter valid address"),
+  special_instructions: Yup.string().min(3).max(50).notRequired(),
+});
 export const registerValidationSchema = Yup.object({
   fullname: Yup.string()
     .min(3)

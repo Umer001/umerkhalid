@@ -2,31 +2,30 @@ import React from "react";
 import { Formik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { slice } from "../../../store/slices/auth";
-import { Label, TextInput, Button } from "flowbite-react";
+import { slice as redirectSlice } from "../../../store/slices/redirect";
+import { Label, TextInput, Button, Spinner } from "flowbite-react";
 import {
   verifyOtp,
   signUpCustomer,
   getUserInfo,
+  signInCustomer,
 } from "../../../services/http-services/auth";
 import { otpValidationSchema } from "../../../utils/formik-validations";
 import { useNavigate } from "react-router-dom";
-
-const OtpForm = ({ signup, handleOtp }) => {
+import toast from "react-hot-toast";
+const OtpForm = ({ signup, handleOtp, phone }) => {
   const dispatch = useDispatch();
 
-  const { customerInfo } = useSelector((state) => {
+  const { customerInfo, showAuthPop } = useSelector((state) => {
     return state.auth;
   });
-  const { showAuthPop } = useSelector((state) => {
-    return state.auth;
+
+  const { redirect } = useSelector((state) => {
+    return state.redirect;
   });
   const navigate = useNavigate();
 
   const registerCustomer = async () => {
-    console.log(
-      "🚀 ~ file: index.jsx:35 ~ customerInfo ~ customerInfo",
-      customerInfo
-    );
     await signUpCustomer({
       customerInfo,
       cbSuccess: async ({ status, message, data }) => {
@@ -36,7 +35,8 @@ const OtpForm = ({ signup, handleOtp }) => {
           dispatch(slice.actions.setCustomerInfo({}));
           const user = await getUserInfo();
           dispatch(slice.actions.setCurCustomerInfo(user));
-          navigate("/dashboard");
+          redirect ? navigate(redirect) : navigate("/dashboard");
+          dispatch(redirectSlice.actions.setRedirect(""));
         } else {
           console.log(status, message);
         }
@@ -46,22 +46,41 @@ const OtpForm = ({ signup, handleOtp }) => {
       },
     });
   };
-
+  const loginCustomer = async () => {
+    await signInCustomer({
+      phone,
+      cbSuccess: async ({ status, message, data }) => {
+        if (status == 201 && data != "") {
+          dispatch(slice.actions.setShowAuthPop(false));
+          const user = await getUserInfo();
+          dispatch(slice.actions.setCurCustomerInfo(user));
+          redirect ? navigate(redirect) : navigate("/dashboard");
+          dispatch(redirectSlice.actions.setRedirect(""));
+        } else {
+          console.log(status, message);
+        }
+      },
+      cbFailure: ({ status, message }) => {
+        console.log(status, message);
+      },
+    });
+  };
   const handleSubmit = (values, setSubmitting) => {
     verifyOtp({
       values,
       cbSuccess: ({ status, message }) => {
         setSubmitting(false);
-        console.log(status, message);
+        handleOtp(false);
+        toast.success(message);
         if (signup) {
           registerCustomer();
         } else {
-          navigate("/dashboard");
+          loginCustomer();
         }
       },
       cbFailure: ({ status, message }) => {
         setSubmitting(false);
-        console.log(status, message);
+        toast.error(message);
       },
     });
   };
@@ -109,7 +128,14 @@ const OtpForm = ({ signup, handleOtp }) => {
 
           <div className="w-full">
             <Button color="failure" type="submit" disabled={isSubmitting}>
-              Verify Otp
+              Verify Otp{" "}
+              {isSubmitting ? (
+                <div className="ml-2">
+                  <Spinner size="sm" light={true} color="failure" />
+                </div>
+              ) : (
+                ""
+              )}
             </Button>
           </div>
         </form>

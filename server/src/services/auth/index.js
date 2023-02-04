@@ -1,6 +1,5 @@
 const { default: mongoose } = require("mongoose");
 const customer = require("../../modal/customers");
-const bcryptJS = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const decodeJWT = (token) => {
@@ -27,14 +26,30 @@ const getUserInfo = async (req, res) => {
   }
 };
 const login = async (req, res) => {
-  const { email, password } = req.body;
-  const _user = await user.findOne({ email }).lean();
-  const _password = await bcryptJS.compare(password, _user.password);
-  if (_password) {
-    const _token = jwt.sign(_user, process.env.JWT_SECRET, { expiresIn: "1h" });
-    res.status(201).json({ message: "user login successful!", token: _token });
+  const { phone } = req.body;
+  console.log("🚀 ~ file: index.js:31 ~ login ~  req.body", req.body, phone);
+  const _user = await customer.findOne({ phone }).lean();
+  if (_user) {
+    const _token = jwt.sign(
+      { user_id: _user._id, fullname: _user.fullname },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.status(201).json({ message: "User login successful!", token: _token });
   } else {
-    res.status(403).json({ message: "Password is invalid" });
+    res.status(403).json({ message: "Invalid Request" });
+  }
+};
+const userExist = async (req, res) => {
+  const { phone } = req.body;
+
+  const _customer = await customer.findOne({ phone }).lean();
+  if (_customer) {
+    res.status(201).json({ message: "customer found!", flag: true });
+  } else {
+    res.status(403).json({ message: "customer not found", flag: false });
   }
 };
 const register = async (req, res) => {
@@ -69,4 +84,4 @@ const register = async (req, res) => {
   return res;
 };
 
-module.exports = { login, register, getUserInfo };
+module.exports = { login, register, getUserInfo, userExist };

@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { slice } from "../../../src/store/slices/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { CartSidebar, Popup, RegisterForm, LoginForm } from "../../components/";
+import { slice as redirectSlice } from "../../../src/store/slices/redirect";
 import { verifyToken } from "../../utils/verify-token";
 const AppNavbar = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ const AppNavbar = () => {
       console.log("🚀 ~ file: index.jsx:16 ~ handleLogout ~ error", error);
     }
   };
+  const handlePopup = () => {
+    dispatch(redirectSlice.actions.setRedirect(""));
+    dispatch(slice.actions.setShowAuthPop(false));
+  };
+
   return (
     <>
       <Navbar fluid={true} rounded={true} className="bg-[#FFCB04] py-4">
@@ -116,10 +122,7 @@ const AppNavbar = () => {
         </Navbar.Collapse>
       </Navbar>
       <CartSidebar open={isOpen} changeHandler={() => setIsOpen(!isOpen)} />
-      <Popup
-        isOpen={showAuthPop}
-        isClose={() => dispatch(slice.actions.setShowAuthPop(false))}
-      >
+      <Popup isOpen={showAuthPop} isClose={handlePopup}>
         {showRegisterForm ? <RegisterForm /> : <LoginForm />}
       </Popup>
     </>

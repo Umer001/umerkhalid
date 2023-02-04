@@ -1,35 +1,48 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+import { Label, TextInput, Checkbox, Button, Spinner } from "flowbite-react";
 import { slice } from "../../../store/slices/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { sendOtp } from "../../../services/http-services/auth";
+import { sendOtp, userExist } from "../../../services/http-services/auth";
 import { loginValidationSchema } from "../../../utils/formik-validations";
+import toast from "react-hot-toast";
 import OtpForm from "../otp";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const [showOtp, setshowOtp] = useState(false);
-  const showRegister = useSelector((state) => {
-    return state.registerForm.showRegisterForm;
-  });
-  const handleSubmit = (values, setSubmitting) => {
-    sendOtp({
-      values,
-      cbSuccess: ({ status, message }) => {
-        setSubmitting(false);
-        setshowOtp(true);
-        console.log(status, message);
-      },
-      cbFailure: ({ status, message }) => {
-        setSubmitting(false);
-        console.log(status, message);
-      },
-    });
+  const [mobile, setMobile] = useState("");
+  const { showRegisterForm, showAuthPop, currentUser } = useSelector(
+    (state) => {
+      return state.auth;
+    }
+  );
+  const handleSubmit = async (values, setSubmitting) => {
+    const falg = await userExist(values);
+
+    if (falg == true) {
+      await sendOtp({
+        values,
+        cbSuccess: ({ status, message }) => {
+          setSubmitting(false);
+          setMobile(values.phone);
+          setshowOtp(true);
+          toast.success("Otp send");
+        },
+        cbFailure: ({ status, message }) => {
+          setSubmitting(false);
+          toast.error(status, message);
+        },
+      });
+    } else {
+      toast.error("Please sign up first");
+      dispatch(slice.actions.setShowRegister(true));
+    }
+    setSubmitting(false);
   };
   return (
     <>
       {showOtp ? (
-        <OtpForm />
+        <OtpForm phone={mobile} handleOtp={() => setshowOtp(false)} />
       ) : (
         <Formik
           initialValues={{ phone: "+923324455796" }}
@@ -59,6 +72,7 @@ const LoginForm = () => {
                 <div className="mb-2 block">
                   <Label htmlFor="text" value="Your phone" />
                 </div>
+
                 <TextInput
                   id="phone"
                   placeholder="+92-333-XXXXXXX"
@@ -76,19 +90,25 @@ const LoginForm = () => {
               <div className="w-full">
                 <Button color="failure" type="submit" disabled={isSubmitting}>
                   Log in to your account
+                  {isSubmitting ? (
+                    <div className="ml-2">
+                      <Spinner size="sm" light={true} color="failure" />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Button>
               </div>
               <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                 Not registered?{" "}
                 <a
                   onClick={() =>
-                    dispatch(slice.actions.setShowRegister(!showRegister))
+                    dispatch(slice.actions.setShowRegister(!showRegisterForm))
                   }
                   className="text-red-700 hover:underline dark:text-blue-500 cursor-pointer"
                 >
                   Create account
                 </a>
-                <div id="recaptcha-container"></div>
               </div>
             </form>
           )}

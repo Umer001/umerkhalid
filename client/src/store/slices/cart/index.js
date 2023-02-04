@@ -55,6 +55,12 @@ export const slice = createSlice({
         return state;
       });
     },
+    emptyCart(state, action) {
+      state.items = [];
+      state.totalAmount = 0;
+      state.totalQuantity = 0;
+      localStorage.setItem("cartItems", JSON.stringify(state.items));
+    },
     getTotals(state, action) {
       let { total, quantity } = state.items.reduce(
         (cartTotal, cartItem) => {

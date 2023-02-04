@@ -7,3 +7,4 @@ export { default as Popup } from "./popup";
 export { default as RegisterForm } from "./forms/register";
 export { default as LoginForm } from "./forms/login";
 export { default as MiniitemCard } from "./cart-sidebar/mini-item-card";
+export { default as EmptyCart } from "./cart/empty-cart";
