@@ -1,6 +1,14 @@
 import AppLayout from "../layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Cart, Checkout, Dashboard, Thankyou } from "../pages";
+import {
+  Home,
+  Cart,
+  Checkout,
+  Dashboard,
+  Thankyou,
+  Orders,
+  Profile,
+} from "../pages";
 import { ProtectedRoutes } from "./protected-routes";
 
 const AppRoutes = () => {
@@ -31,6 +39,22 @@ const AppRoutes = () => {
             element={
               <ProtectedRoutes>
                 <Thankyou />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoutes>
+                <Profile />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoutes>
+                <Orders />
               </ProtectedRoutes>
             }
           />

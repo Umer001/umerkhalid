@@ -18,7 +18,7 @@ const MiniitemCard = ({
             title={item.name}
             alt={item.name}
             sizes="100vw"
-            src={item.api_featured_image}
+            src={item.image}
             decoding="async"
             data-nimg="fill"
             className="absolute inset-0 box-border p-0 border-none m-auto block w-0 h-0 min-w-full min-h-full max-w-full max-h-full object-contain"
@@ -28,7 +28,7 @@ const MiniitemCard = ({
       <div className="flex flex-col">
         <div className="font-bold text-black-500 text-md "> {item.name} </div>
         <div className="mb-3 text-sm text-gray-500 dark:text-gray-400">
-          {item.name}
+          {item.description}
         </div>
         <div className="flex align-items-center gap-5">
           {actions ? (

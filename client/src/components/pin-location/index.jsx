@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { TextInput, Textarea } from "flowbite-react";
-const PinLocation = () => {
+import { TextInput, Textarea, Label } from "flowbite-react";
+const PinLocation = ({ handleChange, valueLat, valueLng, setFieldValue }) => {
   const [google, setGoogle] = useState(null);
   const [position, setPosition] = useState({
     lat: 17.3433037,
@@ -14,27 +14,46 @@ const PinLocation = () => {
   const mapContainerRef = React.useRef(null);
   const searchInputRef = React.useRef(null);
   const [marker, setMarker] = useState(null);
-  useEffect(() => {
-    if (window.google) {
-      setGoogle(window.google);
-      return;
+  const [apiLoaded, setApiLoaded] = useState(false);
+  const [mapsApiLoaded, setMapsApiLoaded] = useState(false);
+  function isMyScriptLoaded(url) {
+    if (!url) url = "http://xxx.co.uk/xxx/script.js";
+    var scripts = document.getElementsByTagName("script");
+    let counter = 0;
+    for (var i = scripts.length; i--; ) {
+      if (scripts[i].src == url) counter++;
     }
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&libraries=places&callback=initMap`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
+    return counter;
+  }
+  useEffect(() => {
+    let count = isMyScriptLoaded(
+      `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&libraries=places&callback=initMap`
+    );
 
-    window.initMap = function () {
-      setGoogle(window.google);
-    };
-  }, []);
+    if (!mapsApiLoaded || !window.google) {
+      setMapsApiLoaded(true);
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&libraries=places&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      if (count == 0) {
+        document.head.appendChild(script);
+      }
+
+      window.initMap = function () {
+        setGoogle(window.google);
+        setApiLoaded(true);
+      };
+    }
+  }, [mapsApiLoaded]);
 
   useEffect(() => {
     if (!google) {
+      console.log("not google", google);
+
+      setGoogle(window.google);
       return;
     }
-
     const map = new google.maps.Map(mapContainerRef.current, {
       center: { lat: 33.6455763, lng: 73.0771667 },
       zoom: 16,
@@ -103,14 +122,31 @@ const PinLocation = () => {
   }, [google]);
 
   return (
-    <div className="mt-6">
+    <div className="mt-4">
+      <div className="mb-2 block">
+        <Label htmlFor="Pin Location" value="Pin Location" />
+      </div>
       <TextInput
         type="text"
         placeholder="Search for a pin location"
         ref={searchInputRef}
       />
-      <TextInput name="lat" type="hidden" value={position.lat} />
-      <TextInput name="lng" type="hidden" value={position.lng} />
+      <TextInput
+        name="lat"
+        onChange={(e) => {
+          setFieldValue("lat", position.lat);
+        }}
+        type="hidden"
+        value={valueLat}
+      />
+      <TextInput
+        name="lng"
+        onChange={(e) => {
+          setFieldValue("lat", position.lng);
+        }}
+        type="hidden"
+        value={valueLng}
+      />
 
       <div ref={mapContainerRef} className="h-[300px] w-full mt-4" />
     </div>

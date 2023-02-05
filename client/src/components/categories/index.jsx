@@ -3,40 +3,25 @@ import React from "react";
 
 const Categories = () => {
   return (
-    <div className="flex flex-wrap gap-2 mt-4 px-2 py-4 sm:px-4 place-content-center  sticky top-0 z-2">
+    <div className="flex flex-wrap gap-2 mt-4 px-2 py-4 sm:px-4 place-content-center   top-0 z-2">
       <div>
         <Button color="light" pill={true} className="font-bold bg-[#e5e5e5]">
-          Somewhat Local
+          Starters
         </Button>
       </div>
       <div>
         <Button color="light" pill={true} className="font-bold bg-[#e5e5e5]">
-          Dark
+          Pizza
         </Button>
       </div>
       <div>
         <Button color="light" pill={true} className="font-bold bg-[#e5e5e5]">
-          Light
+          Pasta
         </Button>
       </div>
       <div>
         <Button color="light" pill={true} className="font-bold bg-[#e5e5e5]">
-          Success
-        </Button>
-      </div>
-      <div>
-        <Button color="light" pill={true} className="font-bold bg-[#e5e5e5]">
-          Failure
-        </Button>
-      </div>
-      <div>
-        <Button color="light" pill={true} className="font-bold bg-[#e5e5e5]">
-          Warning
-        </Button>
-      </div>
-      <div>
-        <Button color="light" pill={true} className="font-bold bg-[#e5e5e5]">
-          Purple
+          Side Order
         </Button>
       </div>
     </div>

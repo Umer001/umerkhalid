@@ -1,11 +1,11 @@
 import { Badge, Button, Spinner } from "flowbite-react";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
 import { slice } from "../../../store/slices/cart";
-
+import { useDispatch, useSelector } from "react-redux";
 const ItemCard = ({ item }) => {
   const [add, setAdd] = useState(false);
+
   const handleAddToCart = () => {
     setAdd(true);
     dispatch(slice.actions.addToCart(item));
@@ -21,7 +21,7 @@ const ItemCard = ({ item }) => {
       <img
         alt={item.name}
         className="h-auto w-40 rounded-t-lg object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-        src={item.api_featured_image}
+        src={item.image}
       />
       <div className="flex h-full flex-col  gap-2 p-3">
         <a href="#">
@@ -30,7 +30,7 @@ const ItemCard = ({ item }) => {
           </h5>
         </a>
         <div className="flex items-center">
-          <p className="text-sm	">{item.name}</p>
+          <p className="text-sm	trim-2">{item.description}</p>
         </div>{" "}
         <Badge color="failure" className="w-fit">
           Rs. {item.price}

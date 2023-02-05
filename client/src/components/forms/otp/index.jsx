@@ -35,7 +35,7 @@ const OtpForm = ({ signup, handleOtp, phone }) => {
           dispatch(slice.actions.setCustomerInfo({}));
           const user = await getUserInfo();
           dispatch(slice.actions.setCurCustomerInfo(user));
-          redirect ? navigate(redirect) : navigate("/dashboard");
+          redirect ? navigate(redirect) : navigate("/");
           dispatch(redirectSlice.actions.setRedirect(""));
         } else {
           console.log(status, message);
@@ -54,7 +54,7 @@ const OtpForm = ({ signup, handleOtp, phone }) => {
           dispatch(slice.actions.setShowAuthPop(false));
           const user = await getUserInfo();
           dispatch(slice.actions.setCurCustomerInfo(user));
-          redirect ? navigate(redirect) : navigate("/dashboard");
+          redirect ? navigate(redirect) : navigate("/");
           dispatch(redirectSlice.actions.setRedirect(""));
         } else {
           console.log(status, message);
@@ -86,7 +86,7 @@ const OtpForm = ({ signup, handleOtp, phone }) => {
   };
   return (
     <Formik
-      initialValues={{ otp: "123456" }}
+      initialValues={{ otp: "" }}
       validationSchema={otpValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
         handleSubmit(values, setSubmitting);

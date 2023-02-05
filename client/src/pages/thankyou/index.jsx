@@ -108,7 +108,7 @@ const Thankyou = ({ orderno }) => {
           </div>
         </div>
       </div>
-      <div className=" flex sm:px-10  h-[35vh] my-3 bg-white place-content-center">
+      <div className=" flex sm:px-10  min-h-[35vh] h-full my-3 bg-white place-content-center">
         <div className="px-4 py-8  text-center ">
           <Alert color="success">
             <span className="text-center text-lg font-medium">
@@ -120,15 +120,19 @@ const Thankyou = ({ orderno }) => {
           <p className="text-lg font-medium my-2 ">
             Your order no is: {orderno}
           </p>
-          <Link to="/">
-            <Button
-              color="failure"
-              className=" mt-2"
-              style={{ display: " inline-block" }}
-            >
-              <i className="fa fa-arrow-left mr-2"></i> Back to Menu
-            </Button>
-          </Link>
+          <div className="flex place-content-center">
+            {" "}
+            <Link to="/" className="mr-2">
+              <Button color="failure" className=" mt-2 ">
+                Back to menu
+              </Button>
+            </Link>
+            <Link to="/orders">
+              <Button color="success" className=" mt-2">
+                View my orders
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </>

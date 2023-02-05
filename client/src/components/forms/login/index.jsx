@@ -75,7 +75,7 @@ const LoginForm = () => {
 
                 <TextInput
                   id="phone"
-                  placeholder="+92-333-XXXXXXX"
+                  placeholder="+923XXXXXXXXX"
                   name="phone"
                   required={true}
                   onChange={handleChange}

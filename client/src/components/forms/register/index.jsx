@@ -37,9 +37,9 @@ const RegisterForm = () => {
       ) : (
         <Formik
           initialValues={{
-            fullname: "umer",
-            email: "umerkhalid01@gmail.com",
-            phone: "+923324455796",
+            fullname: "",
+            email: "",
+            phone: "",
           }}
           validationSchema={registerValidationSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -103,7 +103,7 @@ const RegisterForm = () => {
                 </div>
                 <TextInput
                   id="phone"
-                  placeholder="+92-333-XXXXXXX"
+                  placeholder="+923XXXXXXXXX"
                   name="phone"
                   required={true}
                   onChange={handleChange}

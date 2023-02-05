@@ -36,6 +36,7 @@ const Checkout = () => {
     console.log("🚀 ~ file: index.jsx:29 ~ handleSubmit ~ values", values);
     values.cart = orderData;
     values.cus_id = currentUser.user_id;
+    setSubmitting(false);
     placeOrder({
       values,
       cbSuccess: ({ status, message, data }) => {
@@ -150,7 +151,7 @@ const Checkout = () => {
             special_instructions: "",
             address: "",
             lat: "",
-            lon: "",
+            lng: "",
           }}
           validationSchema={checkoutValidationSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -165,6 +166,7 @@ const Checkout = () => {
             handleBlur,
             handleSubmit,
             isSubmitting,
+            setFieldValue,
             /* and other goodies */
           }) => (
             <form
@@ -191,8 +193,11 @@ const Checkout = () => {
                     {errors.address && touched.address && errors.address}
                   </p>
                 </div>
-                <PinLocation />
-                <div className="mt-6">
+
+                <PinLocation
+                  handleChange={(e) => setFieldValue("lat", e.targer.value)}
+                />
+                <div className="mt-4">
                   <div className="mb-2 block">
                     <Label
                       htmlFor="special_instructions"
@@ -227,7 +232,7 @@ const Checkout = () => {
                 </div>
                 <div className>
                   {/* Total */}
-                  <div className="mt-6 border-t border-b py-2">
+                  <div className="mt-6   border-b py-2">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-medium text-gray-900">
                         Subtotal

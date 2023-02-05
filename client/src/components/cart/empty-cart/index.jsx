@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "flowbite-react";
 
 import { Link } from "react-router-dom";
-const EmptyCart = ({ back }) => {
+const EmptyCart = ({ back, title, subtitle }) => {
   return (
     <div className="flex-1 flex flex-col items-center justify-center h-[70vh]">
       <div className="my-[6px]">
@@ -17,9 +17,11 @@ const EmptyCart = ({ back }) => {
           />
         </span>
       </div>
-      <span className=" text-gray-700">Your cart is empty</span>
+      <span className=" text-gray-700">
+        {title ? title : "Your cart is empty"}
+      </span>
       <span className="my-[6px] text-sm text-gray-700">
-        Add an item and start making your order
+        {subtitle ? subtitle : "Add an item and start making your order"}
       </span>
       {back ? (
         <Link to="/">

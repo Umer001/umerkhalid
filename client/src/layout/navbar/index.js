@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { CartSidebar, Popup, RegisterForm, LoginForm } from "../../components/";
 import { slice as redirectSlice } from "../../../src/store/slices/redirect";
 import { verifyToken } from "../../utils/verify-token";
+import toast from "react-hot-toast";
 const AppNavbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,10 +19,7 @@ const AppNavbar = () => {
     return state.cart;
   });
 
-  const navbarData = [
-    { id: 1, title: "Home", pathName: "/" },
-    { id: 2, title: "Checkout", pathName: "/checkout" },
-  ];
+  const navbarData = [{ id: 1, title: "Menu", pathName: "/" }];
   const [isOpen, setIsOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const { pathname } = useLocation();
@@ -29,6 +27,7 @@ const AppNavbar = () => {
     try {
       localStorage.removeItem("app-token");
       dispatch(slice.actions.setCurCustomerInfo({}));
+      toast.success("Logged Out");
       navigate("/");
     } catch (error) {
       console.log("🚀 ~ file: index.jsx:16 ~ handleLogout ~ error", error);
@@ -75,30 +74,35 @@ const AppNavbar = () => {
             arrowIcon={false}
             inline={true}
             label={
-              <i
-                onClick={() =>
-                  !currentUser || !verifyToken()
-                    ? dispatch(slice.actions.setShowAuthPop(!showAuthPop))
-                    : ""
-                }
-                className="fa fa-user-circle-o  text-red-700 "
-                style={{ fontSize: "28px" }}
-              >
-                <Label value={currentUser?.fullname} />
-              </i>
+              <>
+                <i
+                  onClick={() =>
+                    !currentUser || !verifyToken()
+                      ? dispatch(slice.actions.setShowAuthPop(!showAuthPop))
+                      : ""
+                  }
+                  className="fa fa-user-circle-o  text-red-700 "
+                  style={{ fontSize: "28px" }}
+                ></i>
+                <span className="inline-block text-sm px-2 text-black-700 capitalize">
+                  {currentUser?.fullname}
+                </span>
+              </>
             }
           >
             {currentUser && verifyToken() ? (
               <>
                 <Dropdown.Header>
-                  <span className="block text-sm">{currentUser?.fullname}</span>
                   <span className="block truncate text-sm font-medium">
-                    name@flowbite.com
+                    {currentUser?.email}
                   </span>
                 </Dropdown.Header>
-                <Dropdown.Item>Dashboard</Dropdown.Item>
-                <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>Earnings</Dropdown.Item>
+                <Link to="/orders">
+                  <Dropdown.Item>My Orders</Dropdown.Item>
+                </Link>
+                <Link to="/profile">
+                  <Dropdown.Item>My Profile</Dropdown.Item>
+                </Link>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
               </>

@@ -8,3 +8,6 @@ export { default as RegisterForm } from "./forms/register";
 export { default as LoginForm } from "./forms/login";
 export { default as MiniitemCard } from "./cart-sidebar/mini-item-card";
 export { default as EmptyCart } from "./cart/empty-cart";
+export { default as OrderCard } from "./order-card";
+export { default as OrderPlaceholder } from "./order-placeholder";
+export { default as Paggination } from "./paggination";

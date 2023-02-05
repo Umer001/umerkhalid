@@ -1,24 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, Slider, Categories, ItemPlaceHolder } from "../../components/";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
+import { getProducts } from "../../services/http-services/products";
 const Home = () => {
-  const getProducts = async () => {
-    const { data } = await axios.get(
-      "https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline"
-    );
-    //console.log("🚀 ~ file: index.jsx:12 ~ getProducts ~ data", data);
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
 
-    return data;
-  };
-  const { data, isLoading } = useQuery("Products", getProducts, {
-    enabled: true,
-  });
+  useEffect(() => {
+    async function fetchData() {
+      await getProducts({
+        cbSuccess: ({ status, message, data }) => {
+          setProducts(data.data);
+
+          setLoading(false);
+          console.log("🚀 ~ file: index.jsx:30 ~ fetchData ~ data", data);
+        },
+        cbFailure: ({ status, message }) => {
+          toast.error(status, message);
+          setLoading(false);
+        },
+      });
+    }
+    fetchData();
+  }, []);
   return (
     <>
       <Slider />
       <Categories />
-      {isLoading ? <ItemPlaceHolder /> : <Menu data={data} />}
+      {loading ? <ItemPlaceHolder /> : <Menu data={products} />}
     </>
   );
 };

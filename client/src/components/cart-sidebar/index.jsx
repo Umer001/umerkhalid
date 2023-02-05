@@ -52,8 +52,8 @@ const CartSidebar = ({ open, changeHandler }) => {
       )}
       <div
         id="drawer-right-example"
-        className={`fixed top-0 right-0 z-40 h-screen p-4 duration-1000 z-60 transition-transform bg-white w-96 dark:bg-gray-800 transform-x-full  rounded-l-2xl  ${
-          isOpen ? " transform-none block" : "hidden"
+        className={`fixed top-0 right-0 z-40 h-screen p-4 duration-1000 z-60 transition-transform bg-white w-96 dark:bg-gray-800 transform-x-full rounded-l-2xl ${
+          isOpen ? "transform-none block" : "hidden"
         }`}
         tabIndex={-1}
         aria-labelledby="drawer-right-label"
