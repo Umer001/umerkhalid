@@ -31,7 +31,12 @@ const login = async (req, res) => {
   const _user = await customer.findOne({ phone }).lean();
   if (_user) {
     const _token = jwt.sign(
-      { user_id: _user._id, fullname: _user.fullname },
+      {
+        user_id: _user._id,
+        fullname: _user.fullname,
+        email: _user.email,
+        phone: _user.phone,
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
@@ -65,10 +70,10 @@ const register = async (req, res) => {
     if (error) {
       res
         .status(400)
-        .json({ message: "user nor registered!!", error: error.message });
+        .json({ message: "user not registered!!", error: error.message });
     } else {
       const token = jwt.sign(
-        { user_id: user._id, fullname: user.fullname },
+        { user_id: user._id, fullname: user.fullname, email: user.email },
         process.env.JWT_SECRET,
         {
           expiresIn: "1h",

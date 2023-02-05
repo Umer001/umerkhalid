@@ -1,6 +1,5 @@
 const { default: mongoose } = require("mongoose");
 const order = require("../../modal/orders");
-const orders_items = require("../../modal//orders/order-items");
 
 const { v4: uuidv4 } = require("uuid");
 const generateOrderNumber = () => {
@@ -9,15 +8,6 @@ const generateOrderNumber = () => {
   return uniqueId;
 };
 
-const addOrderItems = (items) => {
-  orderItemsCollection.insertMany(items, (err, result) => {
-    if (err) {
-      res.status(500).send({ error: err });
-    } else {
-      res.send(result.ops);
-    }
-  });
-};
 const palceOrder = async (req, res) => {
   const { special_instructions, cus_id, items, cart, address, lat, lng } =
     req.body;
@@ -47,5 +37,33 @@ const palceOrder = async (req, res) => {
 
   return res;
 };
+const getOrders = async (req, res) => {
+  const { user_id } = req.headers;
 
-module.exports = { palceOrder };
+  const page = parseInt(req.headers.page) || 1;
+  const pageSize = parseInt(req.headers.pagesize) || 8;
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = page * pageSize;
+  const total = await order.find({ customer_id: user_id }).countDocuments();
+  console.log(
+    "🚀 ~ file: index.js:42 ~ getOrders ~ req.headers;",
+    page,
+    pageSize
+  );
+  order
+    .find({ customer_id: user_id }, (error, orders) => {
+      if (error) {
+        res
+          .status(500)
+          .json({ message: "orders not found", error: error.message });
+      } else {
+        res
+          .status(201)
+          .json({ message: "orders found", data: { orders, total } });
+      }
+    })
+    .skip(startIndex)
+    .limit(pageSize)
+    .sort({ _id: -1 });
+};
+module.exports = { palceOrder, getOrders };
