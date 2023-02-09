@@ -16,13 +16,13 @@ export const registerValidationSchema = Yup.object({
     .required("Please enter your valid phone number e.g +923XXXXXXXXX."),
 });
 
-// export const loginValidationSchema = Yup.object({
-//     email: Yup.string().email().required("Please enter your valid email."),
-//     password: Yup.string()
-//         .required("No password provided.")
-//         .min(6, "Password is too short - should be 8 chars minimum.")
-//         .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
-// });
+export const adminLoginValidationSchema = Yup.object({
+  email: Yup.string().email().required("Please enter your valid email."),
+  password: Yup.string()
+    .required("No password provided.")
+    .min(6, "Password is too short - should be 8 chars minimum.")
+    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+});
 
 export const loginValidationSchema = Yup.object({
   phone: Yup.string()

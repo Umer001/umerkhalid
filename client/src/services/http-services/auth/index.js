@@ -124,3 +124,20 @@ export const userExist = async (values) => {
     return false;
   }
 };
+
+export const adminLogin = async ({ values, cbSuccess, cbFailure }) => {
+  try {
+    const { email, password } = values;
+    const { data } = await axios.post(
+      "http://localhost:4000/auth/admin/login",
+      values
+    );
+    localStorage.setItem("admin-app-token", data.token);
+    cbSuccess(data);
+  } catch (error) {
+    console.log("🚀 ~ file: index.js:27 ~ signInWithEmail ~ error", error);
+    if (error.message == "Request failed with status code 403") {
+      cbFailure(error.response.data.message);
+    } else cbFailure(error.message);
+  }
+};

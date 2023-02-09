@@ -11,3 +11,5 @@ export { default as EmptyCart } from "./cart/empty-cart";
 export { default as OrderCard } from "./order-card";
 export { default as OrderPlaceholder } from "./order-placeholder";
 export { default as Paggination } from "./paggination";
+export { default as Table } from "./table";
+export { default as TablePlacehodler } from "./table-placehoder";

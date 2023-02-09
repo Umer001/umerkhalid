@@ -1,7 +1,8 @@
 const { default: mongoose } = require("mongoose");
 const customer = require("../../modal/customers");
+const admin = require("../../modal/admin");
 const jwt = require("jsonwebtoken");
-
+const bcryptJS = require("bcryptjs");
 const decodeJWT = (token) => {
   try {
     // Verify the token using the secret key
@@ -88,5 +89,18 @@ const register = async (req, res) => {
 
   return res;
 };
+const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
 
-module.exports = { login, register, getUserInfo, userExist };
+  const _admin = await admin.findOne({ email }).lean();
+  const _password = await bcryptJS.compare(password, _admin.password);
+  if (_password) {
+    const _token = jwt.sign(_admin, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.status(201).json({ message: "Admin login successful!", token: _token });
+  } else {
+    res.status(403).json({ message: "Password is invalid" });
+  }
+};
+module.exports = { login, register, getUserInfo, userExist, adminLogin };
