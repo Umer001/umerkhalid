@@ -19,7 +19,8 @@ const orderSchema = mongoose.Schema(
       require: true,
     },
     customer_id: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "customers",
       require: true,
     },
     address: {

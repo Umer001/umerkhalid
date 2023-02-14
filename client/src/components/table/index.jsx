@@ -1,163 +1,137 @@
 import React from "react";
-
-const Table = ({ title, data, changePage }) => {
+import moment from "moment";
+import { Button } from "flowbite-react";
+import { TablePlacehodler } from "../../components";
+import TH from "./th";
+import TD from "./td";
+import DatatablePaggination from "./datatable-paggination";
+import { useState } from "react";
+const Table = ({
+  title,
+  data,
+  changePage,
+  totalDocuments,
+  pageSize,
+  page,
+  loading,
+  filterHandler,
+  customer,
+}) => {
+  const [value, setValue] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    filterHandler(value);
+  };
   return (
     <div className="py-2">
       <div className="flex flex-row justify-between w-full mb-1 sm:mb-0">
-        <h2 className="text-2xl leading-tight">{title}</h2>
+        <h2 className="text-2xl leading-tight dark:text-white">{title}</h2>
         <div className="text-end">
-          <form className="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
+          <form
+            onSubmit={(e) => handleSubmit(e)}
+            className="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0"
+          >
             <div className=" relative ">
               <input
                 type="text"
                 id='"form-subscribe-Filter'
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                placeholder="name"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                placeholder="search.."
+                onChange={(e) => setValue(e.target.value)}
               />
             </div>
             <button
-              className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+              className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-red-700 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-200"
               type="submit"
             >
-              Filter
+              Search
             </button>
           </form>
         </div>
       </div>
-      <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-        <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
-          <table className="min-w-full leading-normal">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
-                >
-                  Order#
-                </th>
-                <th
-                  scope="col"
-                  className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
-                >
-                  Customer
-                </th>
-                <th
-                  scope="col"
-                  className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
-                >
-                  Date
-                </th>
-                <th
-                  scope="col"
-                  className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
-                >
-                  Status
-                </th>
-                <th
-                  scope="col"
-                  className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
-                ></th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((order) => {
-                return (
+      <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8 ">
+        <div className="inline-block min-w-full overflow-hidden rounded-lg shadow ">
+          <table className="min-w-full leading-normal ">
+            {loading ? (
+              <TablePlacehodler />
+            ) : !customer ? (
+              <>
+                <thead>
                   <tr>
-                    <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.order_no}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.customer_id}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.createdAt}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                      <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                        <span
-                          aria-hidden="true"
-                          className="absolute inset-0 bg-green-200 rounded-full opacity-50"
-                        ></span>
-                        <span className="relative">{order.status}</span>
-                      </span>
-                    </td>
-                    <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                      <a
-                        href="#"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        Edit
-                      </a>
-                    </td>
+                    <TH>Order#</TH>
+                    <TH>Customer</TH>
+                    <TH>Date/Time</TH>
+                    <TH>Status</TH>
+                    <TH>Actions</TH>
                   </tr>
-                );
-              })}
-            </tbody>
+                </thead>
+                <tbody>
+                  {data.map((order) => {
+                    return (
+                      <tr>
+                        <TD> {order.order_no}</TD>
+                        <TD>{order.customer_id.fullname}</TD>
+                        <TD>
+                          {moment(order.createdAt).format(
+                            "DD MMM, YYYY h:mm a"
+                          )}
+                        </TD>
+                        <TD status={order.status}> </TD>
+                        <TD>
+                          <Button size="xs" color="warning">
+                            <i className="mr-2 fa fa-edit"></i>
+                            Edit
+                          </Button>
+                        </TD>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </>
+            ) : (
+              <>
+                <thead>
+                  <tr>
+                    <TH>Sr#</TH>
+                    <TH>Name</TH>
+                    <TH>Registerd on</TH>
+                    <TH>Email</TH>
+                    <TH>Phone</TH>
+                    <TH>Actions</TH>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((customer, index) => {
+                    return (
+                      <tr key={customer._id}>
+                        <TD> {index + 1}</TD>
+                        <TD> {customer.fullname}</TD>
+                        <TD>
+                          {moment(customer.createdAt).format(
+                            "DD MMM, YYYY h:mm a"
+                          )}
+                        </TD>
+                        <TD> {customer.email}</TD>
+                        <TD> {customer.phone} </TD>
+                        <TD>
+                          <Button size="xs" color="warning">
+                            <i className="mr-2 fa fa-edit"></i>
+                            Edit
+                          </Button>
+                        </TD>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </>
+            )}
           </table>
-          <div className="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
-            <div className="flex items-center">
-              <button
-                type="button"
-                className="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100"
-              >
-                <svg
-                  width={9}
-                  fill="currentColor"
-                  height={8}
-                  className
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-              <button
-                type="button"
-                className="w-full px-4 py-2 text-base text-indigo-500 bg-white border-t border-b hover:bg-gray-100 "
-              >
-                1
-              </button>
-              <button
-                type="button"
-                className="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
-              >
-                2
-              </button>
-              <button
-                type="button"
-                className="w-full px-4 py-2 text-base text-gray-600 bg-white border-t border-b hover:bg-gray-100"
-              >
-                3
-              </button>
-              <button
-                type="button"
-                className="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
-              >
-                4
-              </button>
-              <button
-                type="button"
-                className="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100"
-              >
-                <svg
-                  width={9}
-                  fill="currentColor"
-                  height={8}
-                  className
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
+          <DatatablePaggination
+            changePage={changePage}
+            totalDocuments={totalDocuments}
+            pageSize={pageSize}
+            page={page}
+          />
         </div>
       </div>
     </div>

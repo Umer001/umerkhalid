@@ -15,7 +15,7 @@ const AdminLayout = () => {
         <div className="flex items-start justify-between">
           <AdminSidebar menu={menu} />
           <div className="flex flex-col w-full pl-0 md:p-5 md:space-y-4 ">
-            <AdminHeader />
+            <AdminHeader menu={menu} />
             <div className="h-screen pt-2 pb-24 pl-2 pr-2  md:pt-0 md:pr-0 md:pl-0 overflow-auto admin-main">
               <Outlet />
             </div>

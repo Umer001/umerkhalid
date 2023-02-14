@@ -110,18 +110,22 @@ const Thankyou = ({ orderno }) => {
       </div>
       <div className=" flex sm:px-10  min-h-[35vh] h-full my-3 bg-white place-content-center">
         <div className="px-4 py-8  text-center ">
+          <img
+            src="https://www.linkpicture.com/q/order-placed.gif"
+            type="image"
+            width={150}
+            className="mx-auto"
+          />
           <Alert color="success">
             <span className="text-center text-lg font-medium">
-              <i className="fa fa-check"></i> Thank you! Your order has been
-              placed.
+              Thank you! Your order has been placed.
             </span>
           </Alert>
 
-          <p className="text-lg font-medium my-2 ">
-            Your order no is: {orderno}
+          <p className="text-lg my-2 ">
+            Your order no is: <span className="font-medium ">{orderno}</span>
           </p>
-          <div className="flex place-content-center">
-            {" "}
+          <div className="flex place-content-center mt-5">
             <Link to="/" className="mr-2">
               <Button color="failure" className=" mt-2 ">
                 Back to menu

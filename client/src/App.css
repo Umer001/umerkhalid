@@ -51,7 +51,9 @@ display: -webkit-box;
 .admin-main::-webkit-scrollbar {
   display: none;
 }
-
+.bg-red-200 {
+  background: #ff8c84;
+}
 /* Hide scrollbar for IE, Edge and Firefox */
 .admin-main {
   -ms-overflow-style: none;  /* IE and Edge */

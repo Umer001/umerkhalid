@@ -7,3 +7,4 @@ export { default as Profile } from "./profile";
 export { default as AdminLogin } from "./admin/Login";
 export { default as AdminDashboard } from "./admin//dashboard";
 export { default as AdminOrders } from "./admin/orders";
+export { default as Customers } from "./admin/customers";

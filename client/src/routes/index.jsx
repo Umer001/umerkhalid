@@ -7,6 +7,7 @@ import {
   Checkout,
   AdminLogin,
   Thankyou,
+  Customers,
   Orders,
   Profile,
   AdminDashboard,
@@ -41,7 +42,7 @@ const AppRoutes = () => {
             path="/admin/customers"
             element={
               <AdminProtectedRoutes>
-                <AdminDashboard />
+                <Customers />
               </AdminProtectedRoutes>
             }
           />

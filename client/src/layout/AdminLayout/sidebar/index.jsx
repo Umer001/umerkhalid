@@ -24,7 +24,7 @@ const AdminSidebar = ({ menu }) => {
               return (
                 <Link
                   key={item.id}
-                  className={`flex items-center    justify-start w-full p-4 my-2 font-thin uppercase transition-colors duration-200  ${
+                  className={`flex items-center    justify-start w-full p-4   font-thin uppercase transition-colors duration-200  ${
                     item.path === pathname
                       ? "text-white  bg-red-700  "
                       : "text-gray-500  dark:text-white hover:text-red-700"

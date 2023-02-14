@@ -1,17 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { slice } from "../../../store/slices/admin/layout";
-const AdminHeader = ({ states }) => {
+const AdminHeader = ({ menu }) => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { darkMode, profileDropdown } = useSelector((state) => {
     return state.layout;
   });
   const [mainMenu, setMainMenu] = useState(false);
   return (
-    <header className="z-40 items-center w-full h-16 bg-white shadow-lg dark:bg-gray-700 rounded-2xl">
-      <nav className="bg-white dark:bg-gray-800  shadow ">
+    <header className="z-40 items-center w-full h-16 bg-white shadow-lg dark:bg-gray-700 rounded-2xl ">
+      <nav className="shadow ">
         <div className="px-8 mx-auto max-w-7xl">
           <div className="flex items-center justify-end h-16">
             <div className="block">
@@ -99,7 +100,7 @@ const AdminHeader = ({ states }) => {
                       className="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
                     ></label>
                   </div>
-                  <span className="font-medium text-gray-400">
+                  <span className="font-medium text-gray-400 hidden sm:inline">
                     {darkMode ? "Dark" : "Light"}
                   </span>
                 </div>
@@ -107,7 +108,7 @@ const AdminHeader = ({ states }) => {
             </div>
 
             <div className="flex -mr-2 md:hidden">
-              <button className="text-gray-800 dark:text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none">
+              <button className="text-gray-800 dark:text-white   inline-flex items-center justify-center p-2 rounded-md focus:outline-none">
                 <svg
                   width={20}
                   height={20}
@@ -126,25 +127,27 @@ const AdminHeader = ({ states }) => {
           </div>
         </div>
         <div className={`${!mainMenu ? "hidden " : ""} md:hidden`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link
-              className="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              to="/admin/dashboard"
-            >
-              <i className="fa fa-dashboard"></i> Dashboard
-            </Link>
-            <Link
-              className="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              to="/admin/dashboard"
-            >
-              <i className="fa fa-shopping-cart"></i> Orders
-            </Link>
-            <Link
-              className="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              to="/admin/dashboard"
-            >
-              <i className="fa fa-user"></i> Customers
-            </Link>
+          <div className="px-2  pb-3   sm:px-3">
+            {menu.map((item) => {
+              return (
+                <Link
+                  key={item.id}
+                  className={`flex items-center    justify-start w-full p-2 my-2 font-thin uppercase transition-colors duration-200  ${
+                    item.path === pathname
+                      ? "text-white  bg-red-700  "
+                      : "text-gray-500  dark:text-white hover:text-red-700"
+                  }`}
+                  to={item.path}
+                >
+                  <span className="text-left">
+                    <i className={`fa fa-${item.icon}`}></i>
+                  </span>
+                  <span className="mx-4 text-sm font-normal ">
+                    {item.title}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </nav>
